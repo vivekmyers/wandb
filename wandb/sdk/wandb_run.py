@@ -3786,39 +3786,40 @@ class Run:
         *,
         printer: Union["PrinterTerm", "PrinterJupyter"],
     ) -> None:
-        # todo: is this same as settings._offline?
-        if not poll_exit_response:
-            return
+        pass
+        # # todo: is this same as settings._offline?
+        # if not poll_exit_response:
+        #     return
 
-        progress = poll_exit_response.pusher_stats
-        done = poll_exit_response.done
+        # progress = poll_exit_response.pusher_stats
+        # done = poll_exit_response.done
 
-        megabyte = wandb.util.POW_2_BYTES[2][1]
-        line = f"{progress.uploaded_bytes / megabyte :.3f} MB of {progress.total_bytes / megabyte:.3f} MB uploaded"
-        if progress.deduped_bytes > 0:
-            line += f" ({progress.deduped_bytes / megabyte:.3f} MB deduped)\r"
-        else:
-            line += "\r"
+        # megabyte = wandb.util.POW_2_BYTES[2][1]
+        # line = f"{progress.uploaded_bytes / megabyte :.3f} MB of {progress.total_bytes / megabyte:.3f} MB uploaded"
+        # if progress.deduped_bytes > 0:
+        #     line += f" ({progress.deduped_bytes / megabyte:.3f} MB deduped)\r"
+        # else:
+        #     line += "\r"
 
-        percent_done = (
-            1.0
-            if progress.total_bytes == 0
-            else progress.uploaded_bytes / progress.total_bytes
-        )
+        # percent_done = (
+        #     1.0
+        #     if progress.total_bytes == 0
+        #     else progress.uploaded_bytes / progress.total_bytes
+        # )
 
-        printer.progress_update(line, percent_done)
-        if done:
-            printer.progress_close()
+        # printer.progress_update(line, percent_done)
+        # if done:
+        #     printer.progress_close()
 
-            dedupe_fraction = (
-                progress.deduped_bytes / float(progress.total_bytes)
-                if progress.total_bytes > 0
-                else 0
-            )
-            if dedupe_fraction > 0.01:
-                printer.display(
-                    f"W&B sync reduced upload amount by {dedupe_fraction * 100:.1f}%             "
-                )
+        #     dedupe_fraction = (
+        #         progress.deduped_bytes / float(progress.total_bytes)
+        #         if progress.total_bytes > 0
+        #         else 0
+        #     )
+        #     if dedupe_fraction > 0.01:
+        #         printer.display(
+        #             f"W&B sync reduced upload amount by {dedupe_fraction * 100:.1f}%             "
+        #         )
 
     @staticmethod
     def _footer_multiple_runs_file_pusher_status_info(
